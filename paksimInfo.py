@@ -16,7 +16,7 @@ DEVELOPER = os.getenv("DEVELOPER", "USAMA DHUDDI")
 
 # ==================== HTML TEMPLATE ====================
     
-'''
+HTML_TEMPLATE = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
