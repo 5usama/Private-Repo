@@ -15,1477 +15,685 @@ LAST_CALL = {"ts": 0.0}
 DEVELOPER = os.getenv("DEVELOPER", "USAMA DHUDDI")
 
 # ==================== HTML TEMPLATE ====================
-    
 HTML_TEMPLATE = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 USAMA DHUDDI | Professional SIM Intelligence 🚀</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>SIM Database - Professional Lookup Service</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        /* ====== VARIABLES ====== */
-        :root {
-            --primary: #00ff9d;      /* Neon Green */
-            --secondary: #ff0080;    /* Hot Pink */
-            --accent: #0095ff;       /* Blue */
-            --dark: #0a0a0f;
-            --darker: #050508;
-            --card: rgba(20, 25, 40, 0.85);
-            --glow: 0 0 20px var(--primary);
-            --pink-glow: 0 0 20px var(--secondary);
-            --blue-glow: 0 0 20px var(--accent);
-        }
-
-        /* ====== RESET & BASE ====== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        
         body {
-            font-family: 'Rajdhani', sans-serif;
-            background: var(--dark);
-            color: white;
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
+            transition: all 0.3s ease;
         }
-
-        /* ====== ANIMATED BACKGROUND ====== */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 255, 157, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(255, 0, 128, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(0, 149, 255, 0.05) 0%, transparent 50%);
+        
+        body.light-theme {
+            background-color: #f8f9fa;
+            color: #333;
         }
-
-        .matrix-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 255, 157, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 157, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            pointer-events: none;
-            animation: gridMove 20s linear infinite;
+        
+        body.dark-theme {
+            background-color: #121212;
+            color: #e0e0e0;
         }
-
-        @keyframes gridMove {
-            0% { transform: translateY(0) translateX(0); }
-            100% { transform: translateY(50px) translateX(50px); }
-        }
-
-        /* ====== CONTAINER ====== */
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
-        /* ====== HEADER - BUBBLE EFFECT ====== */
+        
+        /* Header */
         .header {
-            background: rgba(10, 10, 20, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 2px solid transparent;
-            padding: 15px 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
-            border-image: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent)) 1;
-            animation: borderGlow 3s infinite alternate;
+            padding: 20px 0;
+            border-bottom: 1px solid;
+            background-color: inherit;
         }
-
-        @keyframes borderGlow {
-            0% { box-shadow: 0 5px 20px rgba(0, 255, 157, 0.3); }
-            50% { box-shadow: 0 5px 30px rgba(255, 0, 128, 0.4); }
-            100% { box-shadow: 0 5px 25px rgba(0, 149, 255, 0.3); }
+        
+        .light-theme .header {
+            border-bottom-color: #e0e0e0;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-
+        
+        .dark-theme .header {
+            border-bottom-color: #333;
+            background-color: #1e1e1e;
+        }
+        
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
-        /* LOGO - 3D BUBBLE */
+        
         .logo {
             display: flex;
             align-items: center;
             gap: 15px;
             text-decoration: none;
-            position: relative;
         }
-
-        .logo-bubble {
-            width: 65px;
-            height: 65px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 50%;
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #007bff;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            color: black;
-            font-weight: 900;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 
-                0 0 30px var(--primary),
-                inset 0 5px 10px rgba(255, 255, 255, 0.3);
-            animation: bubbleFloat 6s ease-in-out infinite;
-            transform-style: preserve-3d;
-        }
-
-        .logo-bubble::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            border-radius: 50%;
-            animation: shine 3s infinite;
-        }
-
-        @keyframes bubbleFloat {
-            0%, 100% { 
-                transform: translateY(0) rotate(0deg);
-                box-shadow: 0 0 30px var(--primary);
-            }
-            50% { 
-                transform: translateY(-15px) rotate(5deg);
-                box-shadow: 0 10px 40px var(--secondary);
-            }
-        }
-
-        @keyframes shine {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .logo-text {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 2.2rem;
-            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 30px rgba(0, 255, 157, 0.5);
-            letter-spacing: 2px;
-            position: relative;
-        }
-
-        .logo-text::after {
-            content: 'SIM INTELLIGENCE';
-            position: absolute;
-            bottom: -18px;
-            left: 0;
-            font-size: 0.7rem;
-            color: var(--accent);
-            letter-spacing: 3px;
-            text-transform: uppercase;
+            color: white;
             font-weight: 700;
+            font-size: 18px;
         }
-
-        /* HEADER BUTTONS - BUBBLE STYLE */
-        .header-controls {
-            display: flex;
-            gap: 15px;
-            align-items: center;
+        
+        .light-theme .logo-icon {
+            background: #007bff;
         }
-
-        .bubble-btn {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            color: var(--primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            position: relative;
-            overflow: hidden;
+        
+        .dark-theme .logo-icon {
+            background: #0d6efd;
         }
-
-        .bubble-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: var(--primary);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .bubble-btn:hover::before {
-            width: 100px;
-            height: 100px;
-        }
-
-        .bubble-btn:hover {
-            color: black;
-            transform: scale(1.1) rotate(90deg);
-            box-shadow: var(--glow);
-            border-color: var(--secondary);
-        }
-
-        .bubble-btn i {
-            position: relative;
-            z-index: 1;
-        }
-
-        .owner-badge {
-            padding: 12px 25px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border-radius: 30px;
-            font-weight: 900;
-            color: black;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            box-shadow: 0 0 25px rgba(0, 255, 157, 0.5);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-
-        .owner-badge:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 40px rgba(255, 0, 128, 0.6);
-            background: linear-gradient(45deg, var(--secondary), var(--primary));
-        }
-
-        /* ====== HERO SECTION ====== */
-        .hero {
-            padding: 150px 0 80px;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4.5rem;
-            font-weight: 900;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 50px rgba(0, 255, 157, 0.7);
-            letter-spacing: 3px;
-            animation: titleGlitch 5s infinite;
-            position: relative;
-            display: inline-block;
-        }
-
-        .hero-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            animation: lineGlow 2s infinite;
-        }
-
-        @keyframes titleGlitch {
-            0%, 100% { 
-                transform: translateX(0);
-                text-shadow: 0 0 50px rgba(0, 255, 157, 0.7);
-            }
-            25% { 
-                transform: translateX(-5px);
-                text-shadow: 5px 0 var(--secondary), -5px 0 var(--accent);
-            }
-            50% { 
-                transform: translateX(5px);
-                text-shadow: -5px 0 var(--primary), 5px 0 var(--secondary);
-            }
-            75% { 
-                transform: translateX(-3px);
-                text-shadow: 3px 0 var(--accent), -3px 0 var(--primary);
-            }
-        }
-
-        @keyframes lineGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--accent);
-            margin-bottom: 30px;
-            text-shadow: 0 0 15px rgba(0, 149, 255, 0.5);
+        
+        .logo-text {
+            font-size: 22px;
             font-weight: 600;
         }
-
-        .hero-tagline {
-            font-size: 1.2rem;
-            color: #aaa;
-            max-width: 800px;
-            margin: 0 auto 50px;
-            line-height: 1.8;
+        
+        .light-theme .logo-text {
+            color: #007bff;
         }
-
-        /* STATS - BUBBLE CARDS */
+        
+        .dark-theme .logo-text {
+            color: #0d6efd;
+        }
+        
+        .theme-switch {
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+        
+        .light-theme .theme-switch {
+            border-color: #ddd;
+            color: #666;
+        }
+        
+        .light-theme .theme-switch:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .dark-theme .theme-switch {
+            border-color: #444;
+            color: #aaa;
+        }
+        
+        .dark-theme .theme-switch:hover {
+            background-color: #2d2d2d;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .light-theme .hero h1 {
+            color: #2c3e50;
+        }
+        
+        .dark-theme .hero h1 {
+            color: #e0e0e0;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        .dark-theme .hero p {
+            color: #aaa;
+        }
+        
+        /* Stats */
         .stats {
             display: flex;
             justify-content: center;
             gap: 30px;
-            margin: 50px 0;
+            margin: 40px 0;
             flex-wrap: wrap;
         }
-
-        .stat-bubble {
-            background: var(--card);
-            backdrop-filter: blur(10px);
-            border: 2px solid transparent;
-            border-radius: 25px;
-            padding: 30px;
-            min-width: 200px;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            position: relative;
-            overflow: hidden;
+        
+        .stat-item {
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            border-radius: 10px;
+            min-width: 150px;
         }
-
-        .stat-bubble::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent), var(--primary));
-            border-radius: 25px;
-            z-index: -1;
-            opacity: 0.5;
-            filter: blur(15px);
-            animation: borderRotate 4s linear infinite;
+        
+        .light-theme .stat-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
-
-        @keyframes borderRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        .dark-theme .stat-item {
+            background: #1e1e1e;
+            border: 1px solid #333;
         }
-
-        .stat-bubble:hover {
-            transform: translateY(-15px) scale(1.05);
-            box-shadow: var(--glow);
-        }
-
-        .stat-bubble:hover::before {
-            opacity: 0.8;
-            filter: blur(20px);
-        }
-
-        .stat-number {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: block;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        
+        .stat-value {
+            font-size: 32px;
             font-weight: 700;
+            margin-bottom: 8px;
         }
-
-        /* ====== SEARCH SECTION ====== */
+        
+        .light-theme .stat-value {
+            color: #007bff;
+        }
+        
+        .dark-theme .stat-value {
+            color: #0d6efd;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .dark-theme .stat-label {
+            color: #888;
+        }
+        
+        /* Search Section */
         .search-section {
-            margin: 60px 0;
+            padding: 40px 0;
         }
-
+        
         .search-card {
-            background: var(--card);
-            backdrop-filter: blur(20px);
-            border: 2px solid transparent;
-            border-radius: 30px;
-            padding: 60px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 12px;
         }
-
-        .search-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(
-                from 0deg,
-                transparent,
-                var(--primary),
-                var(--secondary),
-                var(--accent),
-                transparent 30%
-            );
-            animation: borderSpin 6s linear infinite;
-            z-index: 1;
+        
+        .light-theme .search-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
         }
-
-        @keyframes borderSpin {
-            100% { transform: rotate(360deg); }
+        
+        .dark-theme .search-card {
+            background: #1e1e1e;
+            border: 1px solid #333;
         }
-
-        .search-card > * {
-            position: relative;
-            z-index: 2;
-        }
-
+        
         .search-header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 35px;
         }
-
-        .search-icon {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 50%;
-            margin: 0 auto 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            color: black;
-            box-shadow: 
-                0 0 60px var(--primary),
-                inset 0 5px 15px rgba(255, 255, 255, 0.3);
-            animation: iconPulse 3s ease-in-out infinite;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .search-icon::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: radial-gradient(circle, transparent 60%, rgba(255, 255, 255, 0.1) 100%);
-            border-radius: 50%;
-            animation: ripple 2s infinite;
-        }
-
-        @keyframes iconPulse {
-            0%, 100% { 
-                transform: scale(1) rotate(0deg);
-                box-shadow: 0 0 60px var(--primary);
-            }
-            50% { 
-                transform: scale(1.1) rotate(180deg);
-                box-shadow: 0 0 80px var(--secondary);
-            }
-        }
-
-        @keyframes ripple {
-            0% { transform: scale(0.8); opacity: 1; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-
-        .search-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            margin-bottom: 15px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 30px rgba(0, 255, 157, 0.5);
-        }
-
-        .search-subtitle {
-            font-size: 1.3rem;
-            color: var(--accent);
-            opacity: 0.9;
+        
+        .search-header h2 {
+            font-size: 28px;
             font-weight: 600;
+            margin-bottom: 10px;
         }
-
-        /* SEARCH FORM */
-        .search-form {
-            max-width: 700px;
-            margin: 0 auto;
+        
+        .light-theme .search-header h2 {
+            color: #2c3e50;
         }
-
+        
+        .dark-theme .search-header h2 {
+            color: #e0e0e0;
+        }
+        
+        .search-header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .dark-theme .search-header p {
+            color: #aaa;
+        }
+        
+        /* Form */
         .form-group {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
-
+        
         .form-label {
             display: block;
-            margin-bottom: 15px;
-            color: var(--primary);
-            font-weight: 900;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 16px;
         }
-
-        .input-with-icon {
-            position: relative;
+        
+        .light-theme .form-label {
+            color: #444;
         }
-
-        .input-icon {
-            position: absolute;
-            left: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-            font-size: 1.5rem;
-            z-index: 1;
+        
+        .dark-theme .form-label {
+            color: #ccc;
         }
-
+        
         .form-input {
             width: 100%;
-            padding: 25px 25px 25px 70px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid transparent;
-            border-radius: 20px;
-            color: white;
-            font-size: 1.2rem;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            transition: all 0.3s;
+            padding: 14px 18px;
+            font-size: 16px;
+            border: 2px solid;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .light-theme .form-input {
+            background: white;
+            border-color: #ddd;
+            color: #333;
+        }
+        
+        .light-theme .form-input:focus {
+            border-color: #007bff;
             outline: none;
-            position: relative;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
         }
-
-        .form-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+        
+        .dark-theme .form-input {
+            background: #2d2d2d;
+            border-color: #444;
+            color: #e0e0e0;
         }
-
-        .form-input:focus {
-            border-image: linear-gradient(45deg, var(--primary), var(--secondary)) 1;
-            box-shadow: 
-                0 0 40px rgba(0, 255, 157, 0.3),
-                inset 0 0 20px rgba(0, 255, 157, 0.1);
-            background: rgba(0, 0, 0, 0.5);
-            transform: translateY(-2px);
+        
+        .dark-theme .form-input:focus {
+            border-color: #0d6efd;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(13,110,253,0.15);
         }
-
+        
         .form-hint {
-            display: block;
-            margin-top: 10px;
-            color: #777;
-            font-size: 0.9rem;
-            padding-left: 10px;
+            font-size: 14px;
+            margin-top: 8px;
         }
-
-        /* SEARCH BUTTON - BUBBLE EFFECT */
+        
+        .light-theme .form-hint {
+            color: #666;
+        }
+        
+        .dark-theme .form-hint {
+            color: #888;
+        }
+        
         .search-btn {
             width: 100%;
-            padding: 25px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            padding: 16px;
+            font-size: 17px;
+            font-weight: 600;
             border: none;
-            border-radius: 20px;
-            color: black;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 900;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-top: 30px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 255, 157, 0.3);
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
         }
-
-        .search-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: 0.6s;
+        
+        .light-theme .search-btn {
+            background: #007bff;
+            color: white;
         }
-
-        .search-btn:hover::before {
-            left: 100%;
+        
+        .light-theme .search-btn:hover {
+            background: #0056b3;
         }
-
-        .search-btn:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 
-                0 20px 60px rgba(255, 0, 128, 0.5),
-                0 0 100px rgba(0, 255, 157, 0.3);
-            background: linear-gradient(45deg, var(--secondary), var(--primary));
-            letter-spacing: 4px;
+        
+        .dark-theme .search-btn {
+            background: #0d6efd;
+            color: white;
         }
-
-        .search-btn:active {
-            transform: translateY(0) scale(0.98);
+        
+        .dark-theme .search-btn:hover {
+            background: #0b5ed7;
         }
-
-        .search-btn i {
-            margin-right: 10px;
-            font-size: 1.6rem;
+        
+        /* Results */
+        #results {
+            margin-top: 40px;
         }
-
-        /* ====== RESULTS SECTION ====== */
-        .results-section {
-            margin: 60px 0;
-            display: none;
-        }
-
-        .results-card {
-            background: var(--card);
-            backdrop-filter: blur(20px);
-            border: 2px solid transparent;
-            border-radius: 30px;
-            padding: 50px;
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .results-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--accent), var(--primary), var(--secondary));
-            border-radius: 30px;
-            z-index: -1;
-            opacity: 0.3;
-            filter: blur(20px);
-            animation: borderPulse 3s infinite alternate;
-        }
-
-        @keyframes borderPulse {
-            0% { opacity: 0.3; filter: blur(20px); }
-            100% { opacity: 0.5; filter: blur(30px); }
-        }
-
+        
         .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            padding-bottom: 25px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid;
         }
-
-        .results-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+        
+        .light-theme .results-header {
+            color: #2c3e50;
+            border-bottom-color: #e0e0e0;
         }
-
-        .results-meta {
-            display: flex;
-            gap: 20px;
-            align-items: center;
+        
+        .dark-theme .results-header {
+            color: #e0e0e0;
+            border-bottom-color: #333;
         }
-
-        .results-count {
-            padding: 12px 25px;
-            background: rgba(0, 255, 157, 0.1);
-            border: 2px solid var(--primary);
-            border-radius: 25px;
-            font-weight: 900;
-            color: var(--primary);
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
-        }
-
-        .results-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        /* RESULT CARD - BUBBLE STYLE */
+        
         .result-card {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid transparent;
-            border-radius: 25px;
-            padding: 30px;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+            padding: 25px;
+            border-radius: 10px;
         }
-
-        .result-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 8px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
-            border-radius: 4px 0 0 4px;
+        
+        .light-theme .result-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
         }
-
-        .result-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 
-                var(--glow),
-                0 15px 40px rgba(0, 0, 0, 0.4);
-            border-image: linear-gradient(45deg, var(--primary), var(--secondary)) 1;
+        
+        .dark-theme .result-card {
+            background: #1e1e1e;
+            border: 1px solid #333;
         }
-
+        
         .result-field {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            transition: all 0.3s;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid;
         }
-
-        .result-field:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateX(10px);
-            border-left: 3px solid var(--primary);
+        
+        .light-theme .result-field {
+            border-bottom-color: #f0f0f0;
         }
-
+        
+        .dark-theme .result-field {
+            border-bottom-color: #333;
+        }
+        
+        .result-field:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
         .field-label {
-            color: var(--primary);
-            font-weight: 900;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            width: 120px;
+            font-weight: 600;
+            color: #666;
         }
-
-        .field-label i {
-            font-size: 1.2rem;
-            color: var(--secondary);
+        
+        .dark-theme .field-label {
+            color: #aaa;
         }
-
+        
         .field-value {
-            color: white;
-            font-weight: 700;
-            text-align: right;
-            max-width: 60%;
-            word-break: break-word;
-            font-size: 1.1rem;
+            flex: 1;
+            color: #333;
         }
-
-        /* LOADING ANIMATION */
+        
+        .dark-theme .field-value {
+            color: #e0e0e0;
+        }
+        
         .loading {
             text-align: center;
-            padding: 80px;
-            grid-column: 1 / -1;
+            padding: 40px;
+            color: #666;
         }
-
-        .loading-spinner {
-            width: 80px;
-            height: 80px;
-            border: 5px solid rgba(255, 255, 255, 0.1);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            margin: 0 auto 25px;
-            animation: spin 1s linear infinite;
-            position: relative;
+        
+        .dark-theme .loading {
+            color: #aaa;
         }
-
-        .loading-spinner::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            border: 5px solid transparent;
-            border-top-color: var(--secondary);
-            border-radius: 50%;
-            animation: spin 1.5s linear infinite reverse;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* ====== FOOTER ====== */
-        .footer {
-            background: rgba(10, 10, 20, 0.95);
-            border-top: 2px solid transparent;
-            padding: 50px 0;
-            margin-top: 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-            animation: footerGlow 3s infinite alternate;
-        }
-
-        @keyframes footerGlow {
-            0% { box-shadow: 0 0 20px var(--primary); }
-            50% { box-shadow: 0 0 30px var(--secondary); }
-            100% { box-shadow: 0 0 25px var(--accent); }
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 40px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .footer-logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            color: black;
-            font-weight: 900;
-            box-shadow: 0 0 20px var(--primary);
-        }
-
-        .footer-logo-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            color: var(--primary);
-            font-weight: 900;
-        }
-
-        .copyright {
-            color: #777;
+        
+        .error {
             text-align: center;
-            flex: 1;
+            padding: 40px;
+            color: #dc3545;
+            background: #f8d7da;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
         }
-
-        .owner-credits {
-            color: var(--secondary);
-            font-weight: 900;
-            font-size: 1.3rem;
+        
+        .dark-theme .error {
+            color: #f8d7da;
+            background: #842029;
+            border-color: #6a1a21;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .dark-theme .no-results {
+            color: #aaa;
+            background: #2d2d2d;
+            border-color: #333;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 40px 0;
+            margin-top: 60px;
+            text-align: center;
+            border-top: 1px solid;
+        }
+        
+        .light-theme .footer {
+            background: white;
+            border-top-color: #e0e0e0;
+            color: #666;
+        }
+        
+        .dark-theme .footer {
+            background: #1e1e1e;
+            border-top-color: #333;
+            color: #888;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+        
+        .developer {
+            font-weight: 600;
             margin: 15px 0;
-            text-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
+            color: #007bff;
         }
-
-        .footer-links {
-            display: flex;
-            gap: 15px;
+        
+        .dark-theme .developer {
+            color: #0d6efd;
         }
-
-        .footer-link {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .footer-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary);
-            transform: scale(0);
-            border-radius: 50%;
-            transition: transform 0.3s;
-        }
-
-        .footer-link:hover::before {
-            transform: scale(1);
-        }
-
-        .footer-link:hover {
-            color: black;
-            transform: translateY(-5px) rotate(15deg);
-            box-shadow: var(--glow);
-            border-color: var(--secondary);
-        }
-
-        .footer-link i {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ====== RESPONSIVE DESIGN ====== */
-        @media (max-width: 992px) {
-            .hero-title { font-size: 3.5rem; }
-            .search-card { padding: 40px 30px; }
-            .results-content { grid-template-columns: repeat(2, 1fr); }
-        }
-
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero-title { font-size: 2.8rem; }
-            .search-card { padding: 30px 20px; }
-            .results-content { grid-template-columns: 1fr; }
-            .footer-content { flex-direction: column; text-align: center; }
-            .stats { gap: 20px; }
-            .stat-bubble { min-width: 160px; padding: 25px; }
-            .header-controls { flex-wrap: wrap; justify-content: center; }
-            .logo-text { font-size: 1.8rem; }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title { font-size: 2.2rem; }
-            .search-title { font-size: 2.2rem; }
-            .stat-bubble { min-width: 140px; padding: 20px; }
-            .stat-number { font-size: 2.8rem; }
-            .logo-bubble { width: 50px; height: 50px; font-size: 22px; }
-            .logo-text { font-size: 1.5rem; }
-        }
-
-        /* ====== SCROLLBAR STYLING ====== */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--darker);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(var(--primary), var(--secondary));
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(var(--secondary), var(--primary));
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .search-card {
+                padding: 25px 20px;
+            }
+            
+            .stat-item {
+                min-width: 120px;
+                padding: 20px;
+            }
+            
+            .result-card {
+                padding: 20px;
+            }
+            
+            .field-label {
+                width: 100px;
+            }
         }
     </style>
 </head>
-<body>
-    <div class="bg-animation"></div>
-    <div class="matrix-grid"></div>
-    
-    <!-- HEADER -->
+<body class="light-theme">
     <header class="header">
-        <div class="container header-content">
-            <a href="#" class="logo">
-                <div class="logo-bubble">UD</div>
-                <div class="logo-text">USAMA DHUDDI</div>
-            </a>
-            
-            <div class="header-controls">
-                <div class="owner-badge">
-                    <i class="fas fa-crown"></i> CREATED BY: USAMA DHUDDI
-                </div>
-                
-                <button class="bubble-btn" id="themeToggle" title="Toggle Theme">
-                    <i class="fas fa-adjust"></i>
-                </button>
-                
-                <button class="bubble-btn" id="menuToggle" title="Menu">
-                    <i class="fas fa-bars"></i>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon">SD</div>
+                    <div class="logo-text">SIM Database</div>
+                </a>
+                <button class="theme-switch" id="themeToggle">
+                    <i class="fas fa-moon"></i> Dark Mode
                 </button>
             </div>
         </div>
     </header>
     
-    <!-- HERO SECTION -->
     <section class="hero">
         <div class="container">
-            <h1 class="hero-title">ADVANCED SIM DATABASE</h1>
-            <p class="hero-subtitle">ULTIMATE INTELLIGENCE SYSTEM</p>
-            
-            <p class="hero-tagline">
-                Professional SIM information retrieval system with 4.7M+ records database. 
-                Search by mobile number or CNIC for complete verified information.
-            </p>
+            <h1>Professional SIM Database Lookup</h1>
+            <p>Accurate and reliable SIM information retrieval service for Pakistan</p>
             
             <div class="stats">
-                <div class="stat-bubble">
-                    <span class="stat-number">4.7M+</span>
-                    <span class="stat-label">RECORDS</span>
+                <div class="stat-item">
+                    <div class="stat-value">4.7M+</div>
+                    <div class="stat-label">Records</div>
                 </div>
-                
-                <div class="stat-bubble">
-                    <span class="stat-number">99.8%</span>
-                    <span class="stat-label">ACCURACY</span>
+                <div class="stat-item">
+                    <div class="stat-value">99.8%</div>
+                    <div class="stat-label">Accuracy</div>
                 </div>
-                
-                <div class="stat-bubble">
-                    <span class="stat-number">24/7</span>
-                    <span class="stat-label">UPTIME</span>
-                </div>
-                
-                <div class="stat-bubble">
-                    <span class="stat-number">0.5s</span>
-                    <span class="stat-label">RESPONSE</span>
+                <div class="stat-item">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">Service</div>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- SEARCH SECTION -->
     <section class="search-section">
         <div class="container">
             <div class="search-card">
                 <div class="search-header">
-                    <div class="search-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    
-                    <h2 class="search-title">SIM DATABASE SEARCH</h2>
-                    <p class="search-subtitle">Enter mobile number or CNIC to retrieve complete information</p>
+                    <h2>Search Database</h2>
+                    <p>Enter mobile number or CNIC to retrieve complete information</p>
                 </div>
                 
-                <form id="searchForm" class="search-form">
+                <form id="searchForm">
                     <div class="form-group">
-                        <label class="form-label">ENTER QUERY</label>
-                        
-                        <div class="input-with-icon">
-                            <i class="fas fa-search input-icon"></i>
-                            <input type="text" id="searchInput" class="form-input" 
-                                   placeholder="03XXXXXXXXX or 13-digit CNIC" 
-                                   maxlength="20" 
-                                   required
-                                   autocomplete="off">
-                        </div>
-                        
-                        <span class="form-hint">
-                            <i class="fas fa-info-circle"></i>
-                            Enter 11-digit mobile number (03402219264) or CNIC (3520212345671)
-                        </span>
+                        <label class="form-label">Search Query</label>
+                        <input type="text" id="searchInput" class="form-input" placeholder="03401234567 or 3520212345671" required>
+                        <div class="form-hint">Enter 11-digit mobile number (03402219264) or CNIC (3520212345671)</div>
                     </div>
                     
                     <button type="submit" class="search-btn">
-                        <i class="fas fa-database"></i> SEARCH DATABASE
+                        <i class="fas fa-search"></i> Search Database
                     </button>
                 </form>
-            </div>
-        </div>
-    </section>
-    
-    <!-- RESULTS SECTION -->
-    <section id="resultsSection" class="results-section">
-        <div class="container">
-            <div class="results-card">
-                <div class="results-header">
-                    <h3 class="results-title">
-                        <i class="fas fa-search"></i> SEARCH RESULTS
-                    </h3>
-                    
-                    <div class="results-meta">
-                        <div class="results-count" id="resultsCount">0 RECORDS</div>
-                        
-                        <button class="bubble-btn" onclick="clearResults()" title="Clear Results">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
                 
-                <div id="resultsContent" class="results-content">
-                    <!-- Results will be inserted here by JavaScript -->
-                </div>
+                <div id="results"></div>
             </div>
         </div>
     </section>
     
-    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <div class="footer-logo-icon">UD</div>
-                    <div class="footer-logo-text">USAMA DHUDDI</div>
-                </div>
-                
-                <div class="copyright">
-                    <p>© 2026 USAMA DHUDDI SIM DATABASE</p>
-                    <p class="owner-credits">Created & Developed by: USAMA DHUDDI</p>
-                    <p style="margin-top: 10px; font-size: 0.9rem; color: #aaa;">
-                        <i class="fas fa-shield-alt"></i> All Rights Reserved | Professional Intelligence System
-                    </p>
-                </div>
-                
-                <div class="footer-links">
-                    <a href="#" class="footer-link" title="WhatsApp">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    
-                    <a href="#" class="footer-link" title="Telegram">
-                        <i class="fab fa-telegram"></i>
-                    </a>
-                    
-                    <a href="#" class="footer-link" title="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                </div>
-            </div>
+            <p>© 2024 SIM Database Lookup Service</p>
+            <p class="developer">Developed by: USAMA DHUDDI</p>
+            <p>All Rights Reserved | Professional Information System</p>
         </div>
     </footer>
-
-    <!-- JAVASCRIPT -->
+    
     <script>
         // Theme Toggle
-        document.getElementById('themeToggle').addEventListener('click', function() {
-            document.body.classList.toggle('dark-theme');
-            const icon = this.querySelector('i');
-            icon.classList.toggle('fa-sun');
-            icon.classList.toggle('fa-moon');
-            
-            // Show notification
-            showNotification('Theme changed!', 'success');
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('light-theme')) {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+            } else {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+            }
         });
         
-        // Menu Toggle
-        document.getElementById('menuToggle').addEventListener('click', function() {
-            showNotification('Menu functionality would go here!', 'info');
-        });
-        
-        // Search Form Handler
+        // Search Form
         document.getElementById('searchForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) return;
             
-            const input = document.getElementById('searchInput');
-            const query = input.value.trim();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Searching database...</div>';
             
-            if (!query) {
-                showNotification('Please enter a mobile number or CNIC', 'error');
-                return;
-            }
-            
-            // Validate input
-            const cleanQuery = query.replace(/\D/g, '');
-            if (cleanQuery.length < 10 || cleanQuery.length > 13) {
-                showNotification('Please enter valid 11-digit number or 13-digit CNIC', 'error');
-                return;
-            }
-            
-            // Show results section
-            const resultsSection = document.getElementById('resultsSection');
-            const resultsContent = document.getElementById('resultsContent');
-            const resultsCount = document.getElementById('resultsCount');
-            
-            resultsSection.style.display = 'block';
-            resultsContent.innerHTML = `
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <p style="color: var(--primary); font-size: 1.5rem; font-weight: 900; margin: 20px 0;">
-                        SEARCHING DATABASE...
-                    </p>
-                    <p style="color: var(--accent); font-size: 1.1rem;">
-                        <i class="fas fa-bolt"></i> Query: ${cleanQuery}<br>
-                        <i class="fas fa-database"></i> Scanning 4.7M+ records...
-                    </p>
-                </div>
-            `;
-            
-            // Scroll to results
-            resultsSection.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
-            
-            // Simulate API call (Replace with actual API call)
-            setTimeout(() => {
-                // Mock data for demonstration
-                const mockData = {
-                    query: cleanQuery,
-                    query_type: cleanQuery.length === 13 ? 'CNIC' : 'Mobile',
-                    results_count: 1,
-                    results: [{
-                        mobile: cleanQuery.length === 13 ? '03001234567' : '92' + cleanQuery.substring(1),
-                        name: 'USAMA DHUDDI',
-                        cnic: cleanQuery.length === 13 ? cleanQuery : '35202-1234567-1',
-                        address: 'Professional SIM Database System, Pakistan',
-                        network: 'Jazz/Warid',
-                        status: 'ACTIVE',
-                        type: 'Prepaid'
-                    }]
-                };
+            try {
+                const response = await fetch('/api/lookup?query=' + encodeURIComponent(query));
+                const data = await response.json();
                 
-                // Display results
-                displayResults(mockData);
-                showNotification('Search completed successfully!', 'success');
-                
-            }, 2000); // 2 second delay for demo
+                if (data.results && data.results.length > 0) {
+                    let html = '<h3 class="results-header">Search Results</h3>';
+                    data.results.forEach((result, index) => {
+                        html += `
+                            <div class="result-card">
+                                <div class="result-field">
+                                    <span class="field-label">Mobile:</span>
+                                    <span class="field-value">${result.mobile || 'N/A'}</span>
+                                </div>
+                                <div class="result-field">
+                                    <span class="field-label">Name:</span>
+                                    <span class="field-value">${result.name || 'N/A'}</span>
+                                </div>
+                                <div class="result-field">
+                                    <span class="field-label">CNIC:</span>
+                                    <span class="field-value">${result.cnic || 'N/A'}</span>
+                                </div>
+                                <div class="result-field">
+                                    <span class="field-label">Address:</span>
+                                    <span class="field-value">${result.address || 'N/A'}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    resultsDiv.innerHTML = html;
+                } else {
+                    resultsDiv.innerHTML = '<div class="no-results">No matching records found in the database</div>';
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = '<div class="error">Search failed. Please try again later.</div>';
+            }
         });
         
-        // Input formatting
+        // Format input - only allow numbers
         document.getElementById('searchInput').addEventListener('input', function() {
             this.value = this.value.replace(/[^0-9]/g, '');
-            
-            // Auto-format
-            const value = this.value.replace(/\D/g, '');
-            if (value.length <= 11) {
-                this.value = value;
-            } else if (value.length === 13) {
-                // CNIC format
-                this.value = value.replace(/(\d{5})(\d{7})(\d{1})/, '$1-$2-$3');
-            }
         });
-        
-        // Display Results Function
-        function displayResults(data) {
-            const resultsContent = document.getElementById('resultsContent');
-            const resultsCount = document.getElementById('resultsCount');
-            
-            resultsCount.textContent = `${data.results_count} RECORDS FOUND`;
-            
-            let html = '';
-            
-            data.results.forEach((result, index) => {
-                html += `
-                    <div class="result-card">
-                        <div class="result-field">
-                            <span class="field-label">
-                                <i class="fas fa-hashtag"></i> RECORD
-                            </span>
-                            <span class="field-value">#${index + 1}</span>
-                        </div>
-                        
-                        <div class="result-field">
-                            <span class="field-label">
-                                <i class="fas fa-mobile-alt"></i> MOBILE
-                            </span>
-                            <span class="field-value">${result.mobile || 'N/A'}</span>
-                        </div>
-                        
-                        <div class="result-field">
-                            <span class="field-label">
-                                <i class="fas fa-user"></i> NAME
-                            </span>
-                            <span class="field-value">${result.name || 'N/A'}</span>
-                        </div>
-                        
-                        <div class="result-field">
-                            <span class="field-label">
-                                <i class="fas fa-id-card"></i> CNIC
-                            </span>
-                            <span class="field-value">${result.cnic || 'N/A'}</span>
-                        </div>
-                        
-                        <div class="result-field">
-                            <span class="field-label">
-                                <i class="fas fa-map-marker-alt"></i> ADDRESS
-                            </span>
-                            <span class="field-value">${result.address || 'N/A'}</span>
-                        </div>
-                        
-                        <div class="result-field">
-                            <span class="field-label">
-                                <i class="fas fa-signal"></i> NETWORK
-                            </span>
-                            <span class="field-value">${result.network || 'N/A'}</span>
-                        </div>
-                        
-                        <div class="result-field">
-                            <span class="field-label">
-                                <i class="fas fa-check-circle"></i> STATUS
-                            </span>
-                            <span class="field-value" style="color: var(--primary); font-weight: 900;">
-                                ${result.status || 'ACTIVE'}
-                            </span>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            resultsContent.innerHTML = html;
-        }
-        
-        // Clear Results
-        function clearResults() {
-            document.getElementById('resultsSection').style.display = 'none';
-            document.getElementById('searchInput').value = '';
-            document.getElementById('searchInput').focus();
-            showNotification('Results cleared!', 'info');
-        }
-        
-        // Notification System
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            
-            const colors = {
-                success: 'var(--primary)',
-                error: 'var(--secondary)',
-                info: 'var(--accent)',
-                warning: '#ffaa00'
-            };
-            
-            notification.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: ${colors[type]};
-                color: black;
-                padding: 20px 25px;
-                border-radius: 20px;
-                z-index: 9999;
-                font-weight: 900;
-                font-size: 1rem;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                transform: translateX(120%);
-                transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-                max-width: 350px;
-                backdrop-filter: blur(10px);
-                border: 2px solid rgba(255, 255, 255, 0.1);
-                display: flex;
-                align-items: center;
-                gap: 15px;
-            `;
-            
-            const icons = {
-                success: 'fa-check-circle',
-                error: 'fa-exclamation-circle',
-                info: 'fa-info-circle',
-                warning: 'fa-exclamation-triangle'
-            };
-            
-            notification.innerHTML = `
-                <i class="fas ${icons[type]}" style="font-size: 1.5rem;"></i>
-                <span>${message}</span>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Animate in
-            setTimeout(() => {
-                notification.style.transform = 'translateX(0)';
-            }, 10);
-            
-            // Remove after 4 seconds
-            setTimeout(() => {
-                notification.style.transform = 'translateX(120%)';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        document.body.removeChild(notification);
-                    }
-                }, 500);
-            }, 4000);
-        }
-        
-        // Add keyboard shortcut
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'k') {
-                e.preventDefault();
-                document.getElementById('searchInput').focus();
-                showNotification('Search shortcut activated!', 'info');
-            }
-            
-            if (e.key === 'Escape') {
-                clearResults();
-            }
-        });
-        
-        // Initialize
-        window.addEventListener('load', () => {
-            showNotification('Welcome to USAMA DHUDDI SIM Database!', 'success');
-            
-            // Add focus effect to search input
-            const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('focus', function() {
-                this.parentElement.style.transform = 'scale(1.02)';
-            });
-            
-            searchInput.addEventListener('blur', function() {
-                this.parentElement.style.transform = 'scale(1)';
-            });
-        });
-        
-        // Add dark theme styles
-        const darkThemeStyle = document.createElement('style');
-        darkThemeStyle.textContent = `
-            .dark-theme {
-                --dark: #050508;
-                --card: rgba(10, 15, 30, 0.9);
-            }
-            
-            .dark-theme .header {
-                background: rgba(5, 5, 10, 0.98);
-            }
-            
-            .dark-theme .footer {
-                background: rgba(5, 5, 10, 0.98);
-            }
-        `;
-        document.head.appendChild(darkThemeStyle);
     </script>
 </body>
 </html>
@@ -1623,7 +831,7 @@ def health():
 # ==================== MAIN ====================
 if __name__ == "__main__":
     port = int(os.getenv("PORT", "8080"))
-    print(f"🚀 Starting USAMA DHUDDI SIM Database on port {port}")
+    print(f"🚀 Starting SIM Database on port {port}")
     print(f"👑 Developer: {DEVELOPER}")
     print(f"🌐 Web Interface: http://localhost:{port}")
     print(f"🔗 API Endpoint: http://localhost:{port}/api/lookup?query=03401234567")
