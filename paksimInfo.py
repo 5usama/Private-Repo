@@ -21,7 +21,7 @@ HTML_TEMPLATE = '''
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIM Database - Professional Lookup Service</title>
+    <title>Usama's Database  --  Sim Owner Details</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
@@ -562,8 +562,8 @@ HTML_TEMPLATE = '''
         <div class="container">
             <div class="header-content">
                 <a href="#" class="logo">
-                    <div class="logo-icon">SD</div>
-                    <div class="logo-text">SIM Database</div>
+                    <div class="logo-icon">UD</div>
+                    <div class="logo-text">Usama's Database</div>
                 </a>
                 <button class="theme-switch" id="themeToggle">
                     <i class="fas fa-moon"></i> Dark Mode
